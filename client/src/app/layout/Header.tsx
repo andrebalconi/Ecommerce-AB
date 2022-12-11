@@ -10,7 +10,12 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
+import agent from '../api/agent'
+import { useStoreContext } from '../context/StoreContext'
+import { Basket } from '../models/basket'
 
 interface Props {
   darkMode: boolean
@@ -41,6 +46,21 @@ const navStyles = {
 }
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
+  //const {basket} = useStoreContext();
+  //const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
+
+  const [loading, setLoading] = useState(true);
+  const [basket, setBasket] = useState<Basket | null>(null);
+
+  useEffect(() => {
+    agent.Basket.get()
+      .then(basket => setBasket(basket))
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false))
+  })
+  
+  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity,0);
+
   return (
     <AppBar position="static" sx={{ mb: 4 }}>
       <Toolbar
@@ -50,7 +70,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           alignItems: 'center',
         }}
       >
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
             E-commerce Peg
           </Typography>
@@ -64,9 +84,14 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
             </ListItem>
           ))}
         </List>
-        <Box display='flex' alignItems='center'>
-          <IconButton size="large" sx={{ color: 'inherit' }}>
-            <Badge badgeContent={7} color="secondary">
+        <Box display="flex" alignItems="center">
+          <IconButton
+            component={Link}
+            to="/basket"
+            size="large"
+            sx={{ color: 'inherit' }}
+          >
+            <Badge badgeContent={itemCount} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>
