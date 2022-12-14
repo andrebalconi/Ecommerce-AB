@@ -10,12 +10,9 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import agent from '../api/agent'
-import { useStoreContext } from '../context/StoreContext'
-import { Basket } from '../models/basket'
+import { useAppSelector } from '../store/configureStore'
 
 interface Props {
   darkMode: boolean
@@ -49,17 +46,18 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
   //const {basket} = useStoreContext();
   //const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
 
-  const [loading, setLoading] = useState(true);
-  const [basket, setBasket] = useState<Basket | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [basket, setBasket] = useState<Basket | null>(null);
 
-  useEffect(() => {
-    agent.Basket.get()
-      .then(basket => setBasket(basket))
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false))
-  })
-  
-  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity,0);
+  // useEffect(() => {
+  //   agent.Basket.get()
+  //     .then(basket => setBasket(basket))
+  //     .catch(error => console.log(error))
+  //     .finally(() => setLoading(false))
+  // })
+
+  const { basket } = useAppSelector((state) => state.basket)
+  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
     <AppBar position="static" sx={{ mb: 4 }}>

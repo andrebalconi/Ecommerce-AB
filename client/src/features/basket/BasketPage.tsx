@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Grid,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -14,34 +13,26 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import { stat } from 'fs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import agent from '../../app/api/agent'
-import { useStoreContext } from '../../app/context/StoreContext'
 import LoadingComponent from '../../app/layout/LoadingComponent'
-import { Basket } from '../../app/models/basket'
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore'
+import { removeItem, setBasket } from './basketSlice'
 import BasketSummary from './BasketSummary'
 
 export default function BasketPage() {
+  const { basket } = useAppSelector((state) => state.basket)
+  const dispatch = useAppDispatch()
   const [status, setStatus] = useState({
     loading: false,
     name: '',
-  })
-  const [basket, setBasket] = useState<Basket | null>(null)
-  const { removeItem } = useStoreContext()
-
-  useEffect(() => {
-    agent.Basket.get()
-      .then((basket) => setBasket(basket))
-      .catch((error) => console.log(error))
-      .finally(() => setStatus({ loading: false, name: '' }))
   })
 
   function handleAddItem(productId: number, name: string) {
     setStatus({ loading: true, name })
     agent.Basket.addItem(productId)
-      .then((basket) => setBasket(basket))
+      .then((basket) => dispatch(setBasket(basket)))
       .catch((error) => console.log(error))
       .finally(() => setStatus({ loading: false, name: '' }))
   }
@@ -49,7 +40,7 @@ export default function BasketPage() {
   function handleRemoveItem(productId: number, quantity = 1, name: string) {
     setStatus({ loading: true, name })
     agent.Basket.removeItem(productId, quantity)
-      .then(() => removeItem(productId, quantity))
+      .then(() => dispatch(removeItem({ productId, quantity })))
       .catch((error) => console.log(error))
       .finally(() => setStatus({ loading: false, name: '' }))
   }
@@ -145,14 +136,14 @@ export default function BasketPage() {
         </Table>
       </TableContainer>
       <Grid container>
-        <Grid item xs={6}/>
+        <Grid item xs={6} />
         <Grid item xs={6}>
           <BasketSummary />
           <Button
             component={Link}
-            to='/checkout'
-            variant='contained'
-            size='large'
+            to="/checkout"
+            variant="contained"
+            size="large"
             fullWidth
           >
             Checkout
