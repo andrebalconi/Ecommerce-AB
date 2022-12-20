@@ -9,7 +9,7 @@ const responseBody = (response: AxiosResponse) => response.data
 
 axios.interceptors.response.use(
   async (response) => {
-    await sleep()
+    //await sleep()
     return response
   },
   (error: AxiosError) => {
@@ -43,8 +43,8 @@ axios.interceptors.response.use(
 )
 
 const requests = {
-  get: (url: string) =>
-    axios.get(url, { withCredentials: true }).then(responseBody),
+  get: (url: string, params?: URLSearchParams) =>
+    axios.get(url, {params, withCredentials: true }).then(responseBody),
   post: (url: string, body: {}) =>
     axios.post(url, body, { withCredentials: true }).then(responseBody),
   put: (url: string, body: {}) =>
@@ -54,8 +54,9 @@ const requests = {
 }
 
 const Catalog = {
-  list: () => requests.get('products'),
+  list: (params: URLSearchParams) => requests.get('products', params),
   details: (id: number) => requests.get(`Products/${id}`),
+  fetchFilters: () => requests.get('products/filters'),
 }
 
 const TestErrors = {
