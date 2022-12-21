@@ -1,15 +1,14 @@
-import { CheckBox } from '@mui/icons-material'
-import { FormGroup, FormControlLabel } from '@mui/material'
+import { FormGroup, FormControlLabel, Checkbox } from '@mui/material'
 import { useState } from 'react'
 
 interface Props {
   items: string[]
-  children: string[] //checked
+  checked: string[] //checked
   onChange: (items: string[]) => void
 }
 
-export default function CheckboxButtons({ items, children, onChange }: Props) {
-  const [checkedItems, setCheckedItems] = useState(children || [])
+export default function CheckboxButtons({ items, checked, onChange }: Props) {
+  const [checkedItems, setCheckedItems] = useState(checked || [])
 
   function handleChecked(value: string) {
     const currentIndex = checkedItems.findIndex((item) => item === value)
@@ -25,8 +24,8 @@ export default function CheckboxButtons({ items, children, onChange }: Props) {
       {items.map((item) => (
         <FormControlLabel
           control={
-            <CheckBox
-              children={checkedItems.indexOf(item) !== -1}
+            <Checkbox
+              checked={checkedItems.indexOf(item) !== -1}
               onClick={() => handleChecked(item)}
             />
           }
