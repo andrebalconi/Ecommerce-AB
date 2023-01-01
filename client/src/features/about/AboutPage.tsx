@@ -4,7 +4,6 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { Button, CardActionArea, CardActions, Grid } from '@mui/material'
 import aboutImage from '../../img/programmer.jpeg'
-import { width } from '@mui/system'
 
 export default function AboutPage() {
   

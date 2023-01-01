@@ -1,4 +1,4 @@
-import Hero from '../../components/Hero'
+import Hero from '../../app/components/Hero'
 import HeroImage from '../../img/home.jpeg'
 
 export default function HomePage() {
