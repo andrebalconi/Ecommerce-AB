@@ -3,32 +3,36 @@ import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import PetsIcon from '@mui/icons-material/Pets'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { ThemeProvider } from '@mui/material/styles'
 import { Paper } from '@mui/material'
 import { FieldValues, useForm } from 'react-hook-form'
 import { LoadingButton } from '@mui/lab'
-import { Link ,useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/store/configureStore'
 import { signInUser } from './accountSlice'
 
-
 export default function Login() {
-  const history = useNavigate();
-  const dispatch = useAppDispatch();
+  const history = useNavigate()
+  const locarion = useLocation()
+  const dispatch = useAppDispatch()
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
   } = useForm({
-    mode: 'all'
+    mode: 'all',
   })
 
   async function submitForm(data: FieldValues) {
-    await dispatch(signInUser(data));
-    history('/catalog')
+    try {
+      await dispatch(signInUser(data))
+      history(locarion.state.from.pathname || '/catalog')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -44,7 +48,7 @@ export default function Login() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <PetsIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
