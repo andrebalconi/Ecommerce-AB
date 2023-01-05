@@ -43,6 +43,7 @@ const navStyles = {
   },
 }
 
+
 export default function Header({ darkMode, handleThemeChange }: Props) {
   //const {basket} = useStoreContext();
   //const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
@@ -70,14 +71,20 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           alignItems: 'center',
         }}
       >
-        <Box display="flex" alignItems="center">
+        <Box sx= {{
+          '@media (min-width:560px)': {display: 'flex'},
+          '@media (max-width:390px)': {display: 'none'}
+          }} alignItems="center">
           <Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
             E-commerce Peg
           </Typography>
           <Switch checked={darkMode} onChange={handleThemeChange} />
         </Box>
-
-        <List sx={{ display: 'flex' }}>
+        
+        <List sx= {{
+          '@media (min-width:560px)': {display: 'flex'},
+          '@media (max-width:390px)': {display: 'inLine'}
+          }}>
           {midLinks.map(({ title, path }) => (
             <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
               {title.toUpperCase()}
@@ -98,7 +105,10 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           {user ? (
             <SignedInMenu />
           ) : (
-            <List sx={{ display: 'flex' }}>
+            <List sx= {{
+              '@media (min-width:560px)': {display: 'flex'},
+              '@media (max-width:390px)': {display: 'inLine'}
+              }}>
             {rightLinks.map(({ title, path }) => (
               <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
                 {title.toUpperCase()}

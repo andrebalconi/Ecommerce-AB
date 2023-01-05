@@ -1,4 +1,4 @@
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 import { useEffect } from 'react'
 import AppPagination from '../../app/components/AppPagination'
 import CheckboxButtons from '../../app/components/CheckboxButtons'
@@ -45,7 +45,9 @@ export default function Catalog() {
 
   return (
     <Grid container columnSpacing={4}>
-      <Grid item xs={3}>
+      <Grid item xs={3} sx= {{
+          '@media (max-width:390px)': {display: 'none'}
+          }}>
         <Paper sx={{ mb: 2 }}>
           <ProductSearch />
         </Paper>
@@ -77,6 +79,7 @@ export default function Catalog() {
           />
         </Paper>
       </Grid>
+
       <Grid item xs={9} sx={{ mb: 4 }}>
         <ProductList products={products} />
       </Grid>

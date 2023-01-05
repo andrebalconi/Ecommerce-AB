@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 
-
 interface Hero {
   Title: string
   subTitle: string
@@ -22,10 +21,18 @@ export default function Hero({
 }: Hero) {
   return (
     <Box>
-      <Typography align="center" variant="h3" sx={{ fontWeight: 900 }}>
+      <Typography
+        align="center"
+        variant="h3"
+        sx={{ width: { xs: '80%', sm: '90%', md: '100%' }, fontWeight: 900 }}
+      >
         {Title} <b style={{ color: 'red' }}>{destakTitle}</b>
       </Typography>
-      <Typography align="center" variant="body2" sx={{ fontWeight: 100 }}>
+      <Typography
+        align="center"
+        variant="body2"
+        sx={{ width: { xs: '80%', sm: '90%', md: '100%' }, fontWeight: 100 }}
+      >
         {subTitle}
       </Typography>
       <Box
@@ -36,15 +43,15 @@ export default function Hero({
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           height: 600,
-          width: '100%',
+          width: { xs: '80%', sm: '90%', md: '100%' },
           display: 'flex',
           justifyContent: 'left',
         }}
       >
         <Box
           sx={{
-            width: { xs: '40%', sm: '50%', md: '60%' },
-            padding: { xs: 3, sm: 2, md: 10 },
+            width: { xs: '60%', sm: '70%', md: '80%' },
+            padding: { xs: 3, sm: 4, md: 15 },
           }}
         >
           <Box sx={{ background: 'white', opacity: '0.8' }}>
