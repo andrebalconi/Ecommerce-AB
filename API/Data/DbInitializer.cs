@@ -186,9 +186,9 @@ namespace API.Data
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                     Price = 25000,
-                    PictureUrl = "/images/products/PetProductName14.png",
+                    PictureUrl = "/images/products/dogAirTravel.jpeg",
                     Brand = "Carlin",
-                    Type = "Toys",
+                    Type = "Acessories",
                     QuantityInStock = 100
                 },
                 new Product
