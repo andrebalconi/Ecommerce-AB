@@ -10,7 +10,7 @@ export default function AboutPage() {
   return (
     <>
       <Grid container spacing={4}>
-        <Grid item xs={4}>
+        <Grid item sx={{ width:{ xs: '100%', sm: '70%', md: '40%' }}}>
           <Card sx={{ maxWidth: 600 }}>
             <CardActionArea>
               <CardMedia
@@ -23,7 +23,7 @@ export default function AboutPage() {
             </CardActionArea>
           </Card>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item sx={{ width:{ xs: '100%', sm: '70%', md: '60%' }}} >
           <CardContent>
             <Typography gutterBottom variant="h4" component="div">
               Web Developer

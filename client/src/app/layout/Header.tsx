@@ -3,17 +3,21 @@ import {
   AppBar,
   Badge,
   Box,
+  Button,
   IconButton,
   List,
   ListItem,
+  Menu,
   Switch,
   Toolbar,
   Typography,
 } from '@mui/material'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useAppSelector } from '../store/configureStore'
 import SignedInMenu from './SignedInMenu'
+import MenuIcon from '@mui/icons-material/Menu';
 
 interface Props {
   darkMode: boolean
@@ -43,24 +47,20 @@ const navStyles = {
   },
 }
 
-
 export default function Header({ darkMode, handleThemeChange }: Props) {
-  //const {basket} = useStoreContext();
-  //const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
-
-  // const [loading, setLoading] = useState(true);
-  // const [basket, setBasket] = useState<Basket | null>(null);
-
-  // useEffect(() => {
-  //   agent.Basket.get()
-  //     .then(basket => setBasket(basket))
-  //     .catch(error => console.log(error))
-  //     .finally(() => setLoading(false))
-  // })
 
   const { basket } = useAppSelector((state) => state.basket)
-  const { user } = useAppSelector(state => state.account)
+  const { user } = useAppSelector((state) => state.account)
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
+  
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar position="static" sx={{ mb: 4 }}>
@@ -71,20 +71,25 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           alignItems: 'center',
         }}
       >
-        <Box sx= {{
-          '@media (min-width:560px)': {display: 'flex'},
-          '@media (max-width:390px)': {display: 'none'}
-          }} alignItems="center">
+        <Box
+          sx={{
+            '@media (min-width:560px)': { display: 'flex' },
+            '@media (max-width:390px)': { display: 'inLine' },
+          }}
+          alignItems="center"
+        >
           <Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
             E-commerce Peg
           </Typography>
           <Switch checked={darkMode} onChange={handleThemeChange} />
         </Box>
-        
-        <List sx= {{
-          '@media (min-width:560px)': {display: 'flex'},
-          '@media (max-width:390px)': {display: 'inLine'}
-          }}>
+
+        <List
+          sx={{
+            '@media (min-width:560px)': { display: 'flex' },
+            '@media (max-width:390px)': { display: 'none' },
+          }}
+        >
           {midLinks.map(({ title, path }) => (
             <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
               {title.toUpperCase()}
@@ -105,18 +110,58 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           {user ? (
             <SignedInMenu />
           ) : (
-            <List sx= {{
-              '@media (min-width:560px)': {display: 'flex'},
-              '@media (max-width:390px)': {display: 'inLine'}
-              }}>
-            {rightLinks.map(({ title, path }) => (
-              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-                {title.toUpperCase()}
-              </ListItem>
-            ))}
-          </List>
+            <List
+              sx={{
+                '@media (min-width:560px)': { display: 'flex' },
+                '@media (max-width:390px)': { display: 'none' },
+              }}
+            >
+              {rightLinks.map(({ title, path }) => (
+                <ListItem
+                  component={NavLink}
+                  to={path}
+                  key={path}
+                  sx={navStyles}
+                >
+                  {title.toUpperCase()}
+                </ListItem>
+              ))}
+            </List>
           )}
-          
+        </Box>
+
+        {/* Mobile Menu */}
+        <Box sx={{
+            '@media (min-width:560px)': { display: 'none' },
+            '@media (max-width:390px)': { display: 'flex' },
+          }}>
+          <Button
+            id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            sx={{ color: 'inherit' }}
+          >
+            <MenuIcon />
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <List>
+            {midLinks.map(({ title, path }) => (
+            <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
+              {title.toUpperCase()}
+            </ListItem>
+          ))}
+            </List>
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>

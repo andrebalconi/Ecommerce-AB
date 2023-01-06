@@ -43,7 +43,7 @@ export default function Hero({
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           height: 600,
-          width: { xs: '80%', sm: '90%', md: '100%' },
+          width: '100%',
           display: 'flex',
           justifyContent: 'left',
         }}
