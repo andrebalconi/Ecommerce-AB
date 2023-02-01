@@ -10,7 +10,7 @@ export default function HomePage() {
         subTitle="Welcome and Good Shopping!"
         imageHero={HeroImage}
         boxTitle='Trending Styles'
-        boxSub='Life is boring without Pets!'
+        boxSub='Life is boring without Pets!!!'
         boxText='We love to pamper your pets'
       />
     </>
