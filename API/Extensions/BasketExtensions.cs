@@ -12,6 +12,8 @@ namespace API.Extensions
             return new BasketDto {
                 Id = basket.Id,
                 BuyerId = basket.BuyerId,
+                PaymentIntentId = basket.PaymentIntentId,
+                ClientSecret = basket.ClientSecret,
                 Items =
                     basket
                         .Items

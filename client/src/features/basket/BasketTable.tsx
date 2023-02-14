@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function BasketTable({items, isBasket = true}: Props) {
-  const { basket, status } = useAppSelector((state) => state.basket)
+  const { status } = useAppSelector((state) => state.basket)
   const dispatch = useAppDispatch()
   return (
     <TableContainer component={Paper}>

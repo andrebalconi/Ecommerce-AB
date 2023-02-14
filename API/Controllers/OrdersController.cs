@@ -7,11 +7,13 @@ using API.DTOs;
 using API.Entities;
 using API.Entities.OrderAggregate;
 using API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly StoreContext _context;
@@ -76,7 +78,8 @@ namespace API.Controllers
                 BuyerId = User.Identity.Name,
                 ShippingAddress = orderDto.ShippingAddress,
                 Subtotal = subtotal,
-                DeliveryFee = deliveryFee
+                DeliveryFee = deliveryFee,
+                PaymentIntentId = basket.PaymentIntentId
             };
 
             _context.Orders.Add(order);
@@ -99,7 +102,6 @@ namespace API.Controllers
                     Country = orderDto.ShippingAddress.Country,
                 };
                 user.Address = address;
-                //_context.Update(user);
             }
 
             var result = await _context.SaveChangesAsync() > 0;
