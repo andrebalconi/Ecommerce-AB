@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useAppSelector } from '../store/configureStore'
 import SignedInMenu from './SignedInMenu'
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from '@mui/icons-material/Menu'
 
 interface Props {
   darkMode: boolean
@@ -48,19 +48,18 @@ const navStyles = {
 }
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
-
   const { basket } = useAppSelector((state) => state.basket)
   const { user } = useAppSelector((state) => state.account)
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
-  
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
     <AppBar position="static" sx={{ mb: 4 }}>
@@ -95,6 +94,10 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
               {title.toUpperCase()}
             </ListItem>
           ))}
+          {user && user.roles?.includes('Admin') &&
+          <ListItem component={NavLink} to={'/inventory'} sx={navStyles}>
+            INVENTORY
+          </ListItem>}
         </List>
         <Box display="flex" alignItems="center">
           <IconButton
@@ -131,10 +134,12 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
         </Box>
 
         {/* Mobile Menu */}
-        <Box sx={{
+        <Box
+          sx={{
             '@media (min-width:560px)': { display: 'none' },
             '@media (max-width:390px)': { display: 'flex' },
-          }}>
+          }}
+        >
           <Button
             id="basic-button"
             aria-controls={open ? 'basic-menu' : undefined}
@@ -155,11 +160,16 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
             }}
           >
             <List>
-            {midLinks.map(({ title, path }) => (
-            <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-              {title.toUpperCase()}
-            </ListItem>
-          ))}
+              {midLinks.map(({ title, path }) => (
+                <ListItem
+                  component={NavLink}
+                  to={path}
+                  key={path}
+                  sx={navStyles}
+                >
+                  {title.toUpperCase()}
+                </ListItem>
+              ))}
             </List>
           </Menu>
         </Box>

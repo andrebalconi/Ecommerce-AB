@@ -21,6 +21,7 @@ import Register from '../../features/account/Register'
 import { fetchCurrentUser } from '../../features/account/accountSlice'
 import Orders from '../../features/orders/Orders'
 import CheckoutWrapper from '../../features/checkout/CheckoutWrapper'
+import Inventory from '../../features/admin/Inventory'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -73,6 +74,7 @@ function App() {
           <Route path="/basket" element={<BasketPage />} />
           <Route path="/checkout" element={<CheckoutWrapper />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/inventory" element={<Inventory />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/*" element={<NotFound />} />

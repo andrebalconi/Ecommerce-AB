@@ -55,7 +55,7 @@ export const fetchProductAsync = createAsyncThunk<Product, number>(
     try {
       return await agent.Catalog.details(productId)
     } catch (error) {
-      return thunkAPI.rejectWithValue(error)
+      return thunkAPI.rejectWithValue({ error })
     }
   },
 )
@@ -77,7 +77,7 @@ function initParams() {
     pageSize: 6,
     orderBy: 'name',
     brands: [],
-    types: []
+    types: [],
   }
 }
 
@@ -113,6 +113,14 @@ export const catalogSlice = createSlice({
     },
     resetProductParams: (state) => {
       state.productParams = initParams()
+    },
+    setProduct: (state, action) => {
+      productsAdapter.upsertOne(state, action.payload)
+      state.productsLoaded = false
+    },
+    removeProduct: (state, action) => {
+      productsAdapter.removeOne(state, action.payload)
+      state.productsLoaded = false
     },
   },
   extraReducers: (builder) => {
@@ -162,4 +170,6 @@ export const {
   resetProductParams,
   setMetaData,
   setPageNumber,
+  setProduct,
+  removeProduct,
 } = catalogSlice.actions
