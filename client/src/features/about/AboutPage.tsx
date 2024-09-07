@@ -37,7 +37,7 @@ export default function AboutPage() {
                 I'm a programmer passionate about technology. My experience as a
                 developer started in 2006 at the biggest private bank in Brazil,
                 working in the automation of processes in the Credit Card
-                operation, in the last 6 years, I have been working on
+                operation, in the last 8 years, I have been working on
                 modernization and website maintenance projects at Mercer Human
                 Resource Consulting on Private Pension Fund Management Business.
                 My work is not a source of income, it is a source of life! My
